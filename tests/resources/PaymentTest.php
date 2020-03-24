@@ -213,7 +213,6 @@ class PaymentTest extends TestCase
                 "cardholder" => array(
                     "name" => $cards_name_for_status[$status],
                     "identification" => array(
-                        "type" => "DNI",
                         "number" => (string)$dni
                     )
                 )

@@ -11,7 +11,4 @@
     <testsuite name="php_sdk_tests">
         <directory>./tests/</directory>
     </testsuite>
-                  
-
-
 </phpunit>
