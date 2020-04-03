@@ -346,9 +346,9 @@ class Manager
      * @param $configuration
      */
     protected function _deltaToJson($entity, &$result){
-        $specialAttributes = array("_last"); // TODO: Refactor this
+        $specialAttributes = array("_last");
 
-        if (!is_array($entity)) {            // TODO: Refactor this
+        if (!is_array($entity)) {
             $attributes = array_filter($entity->toArray());
         } else {
             $attributes = $entity;

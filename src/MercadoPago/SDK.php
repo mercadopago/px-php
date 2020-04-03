@@ -9,6 +9,10 @@ namespace MercadoPago;
 class SDK
 {
 
+    const DEFAULT_METRICS_SCOPE = 'prod';
+    const TEST_METRICS_SCOPE = 'test';
+    const PRODUCT_ID = 'BC32A7RU643001OI3940';
+
     /**
      * @var Config
      */
@@ -22,6 +26,8 @@ class SDK
      * @var
      */
     protected static $_restClient;
+
+    protected static $metricsScope = self::DEFAULT_METRICS_SCOPE;
 
     /**
      * MercadoPagoSdk constructor.
@@ -204,6 +210,26 @@ class SDK
 
     public static function getIntegratorId(){
       return self::$_config->get('x-integrator-id');
+    }
+
+    /**
+     * Get the CRE metrics scope
+     * @return string
+     */
+    public static function getMetricsScope(){
+        return self::$metricsScope;
+    }
+
+    /**
+     * Set CRE metrics scope
+     * @param $value string
+     */
+    public static function setMetricsScope($value) {
+        self::$metricsScope = strval($value);
+    }
+
+    public static function setTestMetricsScope(){
+        self::setMetricsScope(self::TEST_METRICS_SCOPE);
     }
 }
 

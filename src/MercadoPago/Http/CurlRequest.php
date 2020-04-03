@@ -16,6 +16,11 @@ class CurlRequest
      */
     private $handle = null;
 
+    public function getCurlInfo()
+    {
+        return curl_getinfo($this->handle);
+    }
+
     /**
      * @codeCoverageIgnore
      * CurlRequest constructor.

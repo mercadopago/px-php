@@ -23,4 +23,5 @@ class Attribute extends Annotation
     public $idempotency;
     public $defaultValue;
     public $maxLength;
+    public $json;
 }

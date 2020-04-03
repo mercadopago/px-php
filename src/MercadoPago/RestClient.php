@@ -2,7 +2,8 @@
 namespace MercadoPago;
 
 use Exception;
- 
+use MercadoPago\Entities\Insight\Stats;
+
 /**
  * MercadoPago cURL RestClient
  */
@@ -46,7 +47,7 @@ class RestClient
         $default_header = array(
             'Content-Type' => 'application/json',
             'User-Agent' => 'MercadoPago DX-PHP SDK/ v' . Version::$_VERSION,
-            'x-product-id' => 'BC32A7RU643001OI3940',
+            'x-product-id' => SDK::PRODUCT_ID,
             'x-tracking-id' => 'platform:' . PHP_MAJOR_VERSION .'|' . PHP_VERSION . ',type:SDK' . Version::$_VERSION . ',so;'
         );
         if ($customHeaders) {
@@ -117,11 +118,12 @@ class RestClient
      * @throws Exception
      */
     protected function exec($options)
-    {  
+    {
+        $startRequestMillis = round(microtime(true) * 1000);
         $method = key($options);
         $requestPath = reset($options);
         $verb = self::$verbArray[$method];
-        
+
         $headers = $this->getArrayValue($options, 'headers');
         $url_query = $this->getArrayValue($options, 'url_query');
         $formData = $this->getArrayValue($options, 'form_data');
@@ -153,6 +155,20 @@ class RestClient
         }
         $connect->setOption(CURLOPT_RETURNTRANSFER, true);
         $connect->setOption(CURLOPT_CUSTOMREQUEST, $verb);
+        $connect->setOption(CURLOPT_CERTINFO, 1);
+        $responseHeaders = [];
+        $connect->setOption(CURLOPT_HEADERFUNCTION, function($curl, $header) use (&$responseHeaders)
+                    {
+                        $len = strlen($header);
+                        $header = explode(':', $header, 2);
+                        if (count($header) < 2) // ignore invalid headers
+                            return $len;
+
+                        $responseHeaders[strtolower(trim($header[0]))] = trim($header[1]);
+
+                        return $len;
+                    }
+        );
         
         $this->setHeaders($connect, $headers);
         $proxyAddress = $this->getArrayValue($connectionParams, 'proxy_addr');
@@ -182,9 +198,12 @@ class RestClient
         if ($jsonData) {
             $this->setData($connect, $jsonData, "application/json");
         }
- 
+
+        $startMillis = round(microtime(true) * 1000);
         $apiResult = $connect->execute();
-        $apiHttpCode = $connect->getInfo(CURLINFO_HTTP_CODE);
+        $endMillis = round(microtime(true) * 1000);
+
+        $apiHttpCode = $connect->getCurlInfo()['http_code'];
         
         if ($apiResult === false) {
             throw new Exception ($connect->error());
@@ -195,12 +214,19 @@ class RestClient
         if ($apiHttpCode != "200" && $apiHttpCode != "201") {
             error_log($apiResult);
         }
-        
+
         $response['response'] = json_decode($apiResult, true);
         $response['code'] = $apiHttpCode;
+        $response['headers'] = $responseHeaders;
+
+        $requestInfo = $connect->getCurlInfo();
+        $requestInfo['headers'] = $this->getArrayValue($options, 'headers') ? $this->getArrayValue($options, 'headers') : [];
+        $requestInfo['method'] = $verb;
+        $stats = new Stats($requestInfo, $response, $startMillis, $endMillis, $startRequestMillis);
+        $stats->run();
 
         $connect->error();
-        
+
         return ['code' => $response['code'], 'body' => $response['response']];
     }
 

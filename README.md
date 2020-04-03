@@ -13,7 +13,7 @@ The SDK supports PHP 5.6 or major
 #### Using Composer
 
 1. Download [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos) if not already installed
-2. Go to your project directory and run `composer require "mercadopago/dx-php:1.2.1"` on the command line.
+2. Go to your project directory and run `composer require "mercadopago/dx-php:1.9.0"` on the command line.
 3. This how your directory structure would look like.
 4. Thats all, you have Mercado Pago SDK installed.
 

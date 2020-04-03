@@ -144,9 +144,10 @@ class Config
             $this->_restclient->setHttpParam('address', $this->get('base_url'));
         }
         $response = $this->_restclient->get("/users/me", array(
-                "url_query" => array("access_token" => $access_token)
+                "url_query" => array("access_token" => $access_token),
+                "headers" => array("x-product-id" => SDK::PRODUCT_ID)
             )
-        );  
+        );
 
         return $response["body"];
     }
@@ -171,7 +172,6 @@ class Config
     /**
      * Refresh token
      * @return mixed
-     * //TODO check valid response with production credentials
      */
     public function refreshToken()
     {
