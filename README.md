@@ -63,6 +63,8 @@ See the latest version (here)[https://github.com/mercadopago/dx-php/releases].
       "email" => "larue.nienow@hotmail.com"
     );
  
+    $payment->save();
+    
     echo $payment->status;
     
   ?>
