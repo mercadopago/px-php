@@ -1,6 +1,6 @@
 <?php
   
-  require_once dirname(__FILE__) . '/../../index.php';
+  require_once dirname(__FILE__) . '/../index.php';
   
   $config->set('ACCESS_TOKEN', 'ACCESS_TOKEN');
 

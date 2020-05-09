@@ -69,7 +69,12 @@ See the latest version (here)[https://github.com/mercadopago/dx-php/releases].
     
   ?>
 ```
-  
+
+### Included code samples
+There are a number of included code examples in the `/samples` directory. To use them, you first have to navigate to said directory and run `composer install`. After that you can execute each sample through the command line, for example `php suscriptions/plan-create.php`.
+
+\* Keep in mind you have to supply an access token for the samples to work.
+
 ### Support 
 
 Write us at [developers.mercadopago.com](https://developers.mercadopago.com)

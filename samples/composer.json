@@ -1,11 +1,4 @@
 {
-    "repositories": [
-      {
-          "url": "git@github.com:mercadopago/px-php.git",
-          "type": "git"
-      }
-    ], 
-    "name": "root/php-demo",
     "authors": [
         {
             "name": "Joel Ibaceta",
@@ -13,7 +6,7 @@
         }
     ],
     "require": {
-      "mercadopago/px-php": "dev-develop"
+      "mercadopago/dx-php": "^1.0.0"
     }
 }
 
