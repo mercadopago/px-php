@@ -31,7 +31,7 @@
     "symfony/yaml": "~2.5",
     "phpmd/phpmd": "@stable",
     "squizlabs/php_codesniffer": "2.3.*",
-    "sebastian/phpcpd": "*", 
+    "sebastian/phpcpd": "*",
     "doctrine/orm": "~2.3",
     "vlucas/phpdotenv": "^2.5"
   },
@@ -44,6 +44,11 @@
         "src/MercadoPago/Entities/",
         "src/MercadoPago/Entities/Shared/"
       ]
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.x-dev"
     }
   }
 }
