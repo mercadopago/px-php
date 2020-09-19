@@ -275,6 +275,11 @@ abstract class Entity
             $message['error'],
             $message['status']
         );
+         
+        if (is_null($message['cause'])) {
+            $message['cause'] = ['code' => $message['status'], 'description' => $message['message']];
+        }
+        
         $recuperable_error->proccess_causes($message['cause']);
         $this->error = $recuperable_error;
     }
