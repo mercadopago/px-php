@@ -14,12 +14,12 @@ PHP 5.6, 7.1 or higher
 
 First time using Mercado Pago? Create your [Mercado Pago account](https://www.mercadopago.com), if you don’t have one already.
 
-1. Download [Composer](https://getcomposer.org/doc/00-intro.md) if not already installed
+Step 1 - Download [Composer](https://getcomposer.org/doc/00-intro.md) if not already installed
 
-2. On your project directory run on the command line
+Step 2 - On your project directory run on the command line
 `composer require "mercadopago/dx-php:2.1.1"` for PHP7 or `composer require "mercadopago/dx-php:1.8.1"` for PHP5.6.
 
-3. Copy the access_token in the [credentials](https://www.mercadopago.com/mlb/account/credentials) section of the page and replace YOUR_ACCESS_TOKEN with it.
+Step 3 - Copy the access_token in the [credentials](https://www.mercadopago.com/mlb/account/credentials) section of the page and replace YOUR_ACCESS_TOKEN with it.
 
 That's it! Mercado Pago SDK has been successfully installed.
 
