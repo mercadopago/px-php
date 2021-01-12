@@ -153,6 +153,21 @@ class PaymentTest extends TestCase
     }
     
     /**
+     * @depends testCreatePendingPayment
+     */
+    public function testPaymentsSearchNotFound(MercadoPago\Payment $payment_created_previously) {
+
+        $filters = array(
+            "external_reference" => 'invalid_reference'
+        );
+
+        $payments = MercadoPago\Payment::search($filters);
+
+        $this->assertEquals(count($payments), 0);
+
+    }
+
+    /**
      * @depends testCreatePendingPayment 
      */
     public function testCancelPayment(MercadoPago\Payment $payment_created_previously) {
