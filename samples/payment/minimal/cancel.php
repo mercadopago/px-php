@@ -8,7 +8,7 @@
   require_once dirname(__FILE__) . '/create.php';
 
   # Cancel the previous payment, only works from a pending or in_process status
-  $payment->status = "canceled";
+  $payment->status = "cancelled";
   $payment->update();
   
   echo $payment->status;
