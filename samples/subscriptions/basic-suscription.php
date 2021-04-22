@@ -12,7 +12,7 @@
   $preapproval_data->reason = "Monthly subscription to premium package";
   $preapproval_data->external_reference = "OP-1234";
   $preapproval_data->auto_recurring = array( 
-    "frecuency" => 1,
+    "frequency" => 1,
     "frequency_type" => "months",
 		"transaction_amount" => 60,
 		"currency_id" => "ARS",
