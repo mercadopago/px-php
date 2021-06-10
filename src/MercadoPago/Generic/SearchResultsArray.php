@@ -30,7 +30,7 @@
 
             $this->_filters['offset'] = $new_offset; 
             
-            $result = $this->_class::search($this->_filters);
+            $result = $this->_class->search($this->_filters);
 
 
 
