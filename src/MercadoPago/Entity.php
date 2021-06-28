@@ -12,7 +12,7 @@ abstract class Entity
     /**
      * @var
      */
-    
+
     protected static $_custom_headers = array();
     protected static $_manager;
     /**
@@ -71,21 +71,21 @@ abstract class Entity
      * @return mixed
      */
     public static function find_by_id($id)
-    { 
+    {
       return self::read(array("id" => $id));
     }
     public static function setCustomHeader($key, $value)
     {
       self::$_custom_headers[$key] = $value;
-    } 
+    }
     public static function getCustomHeader($key)
     {
       return self::$_custom_headers[$key];
-    } 
+    }
     public static function setCustomHeadersFromArray($array){
-      foreach ($array as $key => $value){ 
+      foreach ($array as $key => $value){
         self::setCustomHeader($key, $value);
-      } 
+      }
     }
     public static function getCustomHeaders()
     {
@@ -96,7 +96,7 @@ abstract class Entity
      * @return mixed
      */
     public function not_found()
-    { 
+    {
         return $this->_empty;
     }
 
@@ -104,16 +104,16 @@ abstract class Entity
      * @return mixed
      */
     public static function read($params = [], $options = [])
-    { 
-    
+    {
+
         $class = get_called_class();
         $entity = new $class();
 
-        self::$_manager->setEntityUrl($entity, 'read', $params); 
+        self::$_manager->setEntityUrl($entity, 'read', $params);
         self::$_manager->cleanEntityDeltaQueryJsonData($entity);
-        
+
         $response =  self::$_manager->execute($entity, 'get', $options);
-        
+
         if ($response['code'] == "200" || $response['code'] == "201") {
             $entity->_fillFromArray($entity, $response['body']);
             $entity->_last = clone $entity;
@@ -141,12 +141,12 @@ abstract class Entity
         self::$_manager->setEntityUrl($entity, 'list', $params);
         self::$_manager->cleanQueryParams($entity);
         $response = self::$_manager->execute($entity, 'get');
-      
+
         if ($response['code'] == "200" || $response['code'] == "201") {
             $results = $response['body'];
             foreach ($results as $result) {
                 $entity = new $class();
-                $entity->_fillFromArray($entity, $result); 
+                $entity->_fillFromArray($entity, $result);
                 array_push($entities, $entity);
             }
         } elseif (intval($response['code']) >= 400 && intval($response['code']) < 500) {
@@ -154,7 +154,7 @@ abstract class Entity
         } else {
             throw new Exception ("Internal API Error");
         }
-        return $entities; 
+        return $entities;
     }
 
     /**
@@ -166,7 +166,7 @@ abstract class Entity
         $searchResult = new SearchResultsArray();
         $searchResult->setEntityTypes($class);
         $entityToQuery = new $class();
-        
+
         self::$_manager->setEntityUrl($entityToQuery, 'search');
         self::$_manager->cleanQueryParams($entityToQuery);
         self::$_manager->setQueryParams($entityToQuery, $filters);
@@ -203,20 +203,20 @@ abstract class Entity
      * @return mixed
      */
     public function update($options = [])
-    {   
+    {
         $params = [];
         self::$_manager->setEntityUrl($this, 'update', $params);
         self::$_manager->setEntityDeltaQueryJsonData($this);
 
-        $response =  self::$_manager->execute($this, 'put');
+        $response =  self::$_manager->execute($this, 'put', $options);
 
         if ($response['code'] == "200" || $response['code'] == "201") {
-            
-            $this->_fillFromArray($this, $response['body']); 
+
+            $this->_fillFromArray($this, $response['body']);
             return true;
         } elseif (intval($response['code']) >= 400 && intval($response['code']) < 500) {
-            // A recuperable error 
-            $this->process_error_body($response['body']); 
+            // A recuperable error
+            $this->process_error_body($response['body']);
             return false;
         } else {
             throw new Exception ("Internal API Error");
@@ -249,10 +249,10 @@ abstract class Entity
      * @return mixed
      */
     public function save($options = [])
-    { 
+    {
         self::$_manager->setEntityUrl($this, 'create');
         self::$_manager->setEntityQueryJsonData($this);
-        
+
         $response = self::$_manager->execute($this, 'post', $options);
 
         if ($response['code'] == "200" || $response['code'] == "201") {
@@ -289,7 +289,7 @@ abstract class Entity
         return $this->{$name};
     }
 
-    
+
 
     /**
      * @param $name
@@ -335,20 +335,20 @@ abstract class Entity
             $result = get_object_vars($this);
         } else {
             $result = array_intersect_key(get_object_vars($this), $attributes);
-        }        
+        }
 
-        foreach ($excluded_attributes as $excluded_attribute) { 
+        foreach ($excluded_attributes as $excluded_attribute) {
             unset($result[$excluded_attribute]);
         }
 
-        foreach ($result as $key => $value) { 
+        foreach ($result as $key => $value) {
             if (!is_bool($value) && empty($value)) {
                 unset($result[$key]);
             }
         }
 
         return $result;
-    
+
     }
     /**
      * @param $property
@@ -451,7 +451,7 @@ abstract class Entity
                     } else {
                         return $value->format('Y-m-d\TH:i:s.000P');
                     }
-                    
+
             }
         } catch (\Exception $e) {
             throw new \Exception('Wrong type ' . gettype($value) . '. Cannot convert ' . $type . ' for property ' . $property);
@@ -465,10 +465,10 @@ abstract class Entity
      * @param $data
      */
     protected function _fillFromArray($entity, $data)
-    { 
-      
+    {
+
       if ($data) {
-        
+
         foreach ($data as $key => $value) {
             if (!is_null($value)){
                 if (is_array($value)) {
