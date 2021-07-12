@@ -58,4 +58,18 @@ class Refund extends Entity {
      */
     protected $date_created;
 
+    /**
+     * advanced_payment_id
+     * @Attribute(serialize=false)
+     * @var int
+     */
+    protected $advanced_payment_id;
+
+    /**
+     * refund_id
+     * @Attribute(serialize=false)
+     * @var int
+     */
+    protected $refund_id;
+
 }
